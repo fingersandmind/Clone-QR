@@ -2,34 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.lopez.julz.qrattendance.Home"
+    tools:context="com.lopez.julz.qrattendance.ChooseSemester"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_home"
+        android:id="@+id/toolbar_choose_sem"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
         android:elevation="3dp">
 
         <TextView
-            android:id="@+id/toolbar_home_title"
+            android:id="@+id/toolbar_choose_sem_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
-            android:text="@string/app_name"
+            android:text="Choose SY and Semester"
             android:textColor="@color/whiteText"/>
 
     </android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/menu_recycler_view"
+        android:id="@+id/semester_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
-        android:scrollbars="vertical"
-        android:padding="15dp"/>
+        android:scrollbars="vertical"/>
 
 </LinearLayout>

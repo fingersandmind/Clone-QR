@@ -2,34 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.lopez.julz.qrattendance.Home"
-    android:orientation="vertical">
+    tools:context="com.lopez.julz.qrattendance.AttendanceMenu">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_home"
+        android:id="@+id/toolbar_attendance_menu"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
         android:elevation="3dp">
 
         <TextView
-            android:id="@+id/toolbar_home_title"
+            android:id="@+id/attendance_menu_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
-            android:text="@string/app_name"
+            android:text="Check Attendance"
             android:textColor="@color/whiteText"/>
 
     </android.support.v7.widget.Toolbar>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/menu_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:scrollbars="vertical"
-        android:padding="15dp"/>
 
 </LinearLayout>

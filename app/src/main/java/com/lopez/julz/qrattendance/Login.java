@@ -1,9 +1,7 @@
 package com.lopez.julz.qrattendance;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,14 +19,11 @@ import org.json.JSONObject;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Login extends AppCompatActivity {
 
@@ -51,7 +46,12 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
                 String uname = username.getText().toString();
                 String pword = password.getText().toString();
-                new LoginThred().execute(uname, pword);
+
+                if (uname.equals("") | pword.equals("") | uname.length()<1 | pword.length()<1) {
+                    Toast.makeText(getApplicationContext(), "Supply first the fields above to login.", Toast.LENGTH_SHORT).show();
+                } else {
+                    new LoginThred().execute(uname, pword);
+                }
             }
         });
     }
@@ -75,7 +75,8 @@ public class Login extends AppCompatActivity {
 
     class LoginThred extends AsyncTask<String, Void, String> {
 
-        String errorResponse = "";
+        String responseJSON = "";
+        String tId = "";
 
         @Override
         protected void onPreExecute() {
@@ -128,18 +129,29 @@ public class Login extends AppCompatActivity {
                     while((line = br.readLine()) != null) {
                         if (line.length() > 1) {
                             sb.add(line);
-                            break;
+                           // break;
                         }
                     }
 
+                    // GET RESPONSE CODE
                     String resCodes[] = sb.get(0).split(": ");
                     String resCode = resCodes[0].replaceAll("\"","");
+
+                    // GET RESPONSE DATA
+                    String resDatas[] = sb.get(1).split(":");
+                    String resData = resDatas[1].replaceAll("\"", "");
+
+                    // GET TEACHER ID
+                    String tIds[] = sb.get(2).split(":");
+                    tId = tIds[1].replaceAll("\"", "");
+
+                    responseJSON = resData;
 
                     br.close();
                     return resCode.trim();
                 } else {
-                    errorResponse = "Error connecting to the server. \nResponse code " + responseCode;
-                    return errorResponse;
+                    responseJSON = "Error connecting to the server. \nResponse code " + responseCode;
+                    return responseJSON;
                 }
 
             } catch (IOException e) {
@@ -154,14 +166,18 @@ public class Login extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            dialog.dismiss();
+
             if (result.equals("200")) { // IF LOGIN IS SUCCESSFUL
+                dialog.dismiss();
                 Bundle bundle = new Bundle();
                 bundle.putString("username", username.getText().toString());
-                Intent intent = new Intent(Login.this, Home.class);
+                bundle.putString("teacherId", tId);
+                Intent intent = new Intent(Login.this, QRScanAttendance.class);
                 startActivity(intent, bundle);
+                finish();
             } else { // IF NOT
-                Snackbar.make(login, "User not found.", Snackbar.LENGTH_SHORT).show();
+                dialog.dismiss();
+                Toast.makeText(getApplicationContext(), responseJSON, Toast.LENGTH_SHORT).show();
             }
         }
     }
