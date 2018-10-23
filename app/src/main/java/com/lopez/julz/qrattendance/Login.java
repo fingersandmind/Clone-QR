@@ -172,7 +172,7 @@ public class Login extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString("username", username.getText().toString());
                 bundle.putString("teacherId", tId);
-                Intent intent = new Intent(Login.this, QRScanAttendance.class);
+                Intent intent = new Intent(Login.this, Home.class);
                 startActivity(intent, bundle);
                 finish();
             } else { // IF NOT

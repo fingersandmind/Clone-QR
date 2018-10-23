@@ -2,6 +2,7 @@ package com.lopez.julz.qrattendance;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -59,10 +60,16 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
                 if (position == 0) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("TCHNUM", menu.getTchnum());
                     Intent intent = new Intent(mContext, ChooseSemester.class);
+                    intent.putExtras(bundle);
                     mContext.startActivity(intent);
                 } else if (position == 1) {
-                    Intent intent = new Intent(mContext, AttendanceMenu.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("TCHNUM", menu.getTchnum());
+                    Intent intent = new Intent(mContext, ChooseClass.class);
+                    intent.putExtras(bundle);
                     mContext.startActivity(intent);
                 }
             }

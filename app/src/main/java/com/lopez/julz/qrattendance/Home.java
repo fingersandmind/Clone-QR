@@ -15,10 +15,15 @@ public class Home extends AppCompatActivity {
     private MenuAdapter adapter;
     private List<Menu> menuList;
 
+    public String tchnum = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+//        Bundle bundle = getIntent().getExtras();
+        tchnum = "009";
 
         recyclerView = (RecyclerView) findViewById(R.id.menu_recycler_view);
         menuList = new ArrayList<>();
@@ -38,10 +43,10 @@ public class Home extends AppCompatActivity {
                 R.drawable.ic_assignment_turned_in_black_24dp,
         };
 
-        Menu a = new Menu(covers[0], "Download Scheds");
+        Menu a = new Menu(covers[0], "Download Scheds", tchnum);
         menuList.add(a);
 
-        a = new Menu(covers[1], "Check Attendance");
+        a = new Menu(covers[1], "Check Attendance", tchnum);
         menuList.add(a);
 
         adapter.notifyDataSetChanged();

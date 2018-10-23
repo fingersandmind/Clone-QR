@@ -26,7 +26,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".AttendanceMenu" />
-        <activity android:name=".ChooseSemester"></activity>
+        <activity android:name=".ChooseSemester" />
+        <activity android:name=".DownloadClasses" />
+        <activity android:name=".ChooseClass"></activity>
     </application>
 
 </manifest>

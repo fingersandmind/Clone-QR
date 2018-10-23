@@ -2,6 +2,7 @@ package com.lopez.julz.qrattendance;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,14 +49,19 @@ public class SemesterAdapter extends RecyclerView.Adapter<SemesterAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(SemesterAdapter.ViewHolder holder, int position) {
-        Semester semester = semesterList.get(position);
+        final Semester semester = semesterList.get(position);
         holder.sem.setText(semester.getSem());
         holder.semid.setText(semester.getSemid());
 
         holder.sems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, ChooseSemester.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("SEM_ID", semester.getSemid());
+                bundle.putString("TCHNUM", semester.getTchnum());
+                bundle.putString("SEM", semester.getSem());
+                Intent intent = new Intent(mContext, DownloadClasses.class);
+                intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }
         });

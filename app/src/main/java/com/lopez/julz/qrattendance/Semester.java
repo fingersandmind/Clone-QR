@@ -6,11 +6,17 @@ package com.lopez.julz.qrattendance;
 
 public class Semester {
 
-    private String sem, semid;
+    private String sem, semid, tchnum;
 
     public Semester(String sem, String semid) {
         this.sem = sem;
         this.semid = semid;
+    }
+
+    public Semester(String sem, String semid, String tchnum) {
+        this.sem = sem;
+        this.semid = semid;
+        this.tchnum = tchnum;
     }
 
     public String getSem() {
@@ -27,5 +33,13 @@ public class Semester {
 
     public void setSemid(String semid) {
         this.semid = semid;
+    }
+
+    public String getTchnum() {
+        return tchnum;
+    }
+
+    public void setTchnum(String tchnum) {
+        this.tchnum = tchnum;
     }
 }

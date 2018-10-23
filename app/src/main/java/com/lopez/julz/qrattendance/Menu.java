@@ -9,11 +9,17 @@ import android.widget.ImageView;
 public class Menu {
 
     private int icon;
-    private String title;
+    private String title, tchnum;
 
     public Menu(int icon, String title) {
         this.icon = icon;
         this.title = title;
+    }
+
+    public Menu(int icon, String title, String tchnum) {
+        this.icon = icon;
+        this.title = title;
+        this.tchnum = tchnum;
     }
 
     public int getIcon() {
@@ -30,5 +36,13 @@ public class Menu {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getTchnum() {
+        return tchnum;
+    }
+
+    public void setTchnum(String tchnum) {
+        this.tchnum = tchnum;
     }
 }
