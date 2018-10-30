@@ -127,6 +127,7 @@ public class QRScanAttendance extends AppCompatActivity {
                         txtBarcodeValue.setText(intentData);
                           //  Log.e("TEST", tcid + " - "+ getCurrentDate(new Date()) + " - "+ getCurrentTime(new Date()));
                         new AddAttendance().execute();
+
                         }
                     });
                 }
