@@ -2,11 +2,13 @@ package com.lopez.julz.qrattendance;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -19,28 +21,42 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class QRScanAttendance extends AppCompatActivity {
 
     public Toolbar toolbar;
 
     SurfaceView surfaceView;
-    TextView txtBarcodeValue;
+    TextView txtBarcodeValue, title;
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
     String intentData = "";
     boolean isEmail = false;
 
+    APIParser parser;
+
+    String tcid = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_scan_attendance);
 
+        Bundle bundle = getIntent().getExtras();
         toolbar = (Toolbar) findViewById(R.id.toolbar_home);
+        title = (TextView) findViewById(R.id.toolbar_qr_title);
+        tcid = bundle.getString("TCID");
+        parser = new APIParser();
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+        title.setText(tcid);
 
         initViews();
 
@@ -103,27 +119,16 @@ public class QRScanAttendance extends AppCompatActivity {
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (barcodes.size() != 0) {
-
-
                     txtBarcodeValue.post(new Runnable() {
 
                         @Override
                         public void run() {
-
-                            if (barcodes.valueAt(0).email != null) {
-                                txtBarcodeValue.removeCallbacks(null);
-                                intentData = barcodes.valueAt(0).email.address;
-                                txtBarcodeValue.setText(intentData);
-                                isEmail = true;
-                            } else {
-                                isEmail = false;
-                                intentData = barcodes.valueAt(0).displayValue;
-                                txtBarcodeValue.setText(intentData);
-                                Snackbar.make(txtBarcodeValue, intentData, Snackbar.LENGTH_SHORT).show();
-                            }
+                        intentData = barcodes.valueAt(0).displayValue;
+                        txtBarcodeValue.setText(intentData);
+                          //  Log.e("TEST", tcid + " - "+ getCurrentDate(new Date()) + " - "+ getCurrentTime(new Date()));
+                        new AddAttendance().execute();
                         }
                     });
-
                 }
             }
         });
@@ -139,5 +144,40 @@ public class QRScanAttendance extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         initialiseDetectorsAndSources();
+    }
+
+    class AddAttendance extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            parser.insertAttendance(tcid, getCurrentDate(new Date()), getCurrentTime(new Date()));
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            finish();
+        }
+    }
+
+    public String getCurrentDate(Date date) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            return sdf.format(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public String getCurrentTime(Date date) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("K:m:s");
+            return sdf.format(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

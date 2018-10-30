@@ -28,6 +28,7 @@ public class DatabaseHelper {
                     "sem VARCHAR(150))";
 
             String classes = "CREATE TABLE IF NOT EXISTS classes (id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "tcid VARCHAR (15)," +
                     "course VARCHAR(50)," +
                     "time_start VARCHAR(20)," +
                     "time_end VARCHAR (20)," +
@@ -103,10 +104,10 @@ public class DatabaseHelper {
         }
     }
 
-    public boolean insertToClasses(String course, String tStart, String tEnd, String day, String room, String semid) {
+    public boolean insertToClasses(String tcid, String course, String tStart, String tEnd, String day, String room, String semid) {
         try {
             String sql = "";
-            sql = "INSERT INTO classes VALUES (NULL, '"+ course +"'," +
+            sql = "INSERT INTO classes VALUES (NULL, '" + tcid + "', '"+ course +"'," +
                     "'" + tStart + "'," +
                     "'" + tEnd + "'," +
                     "'" + day + "'," +
@@ -147,12 +148,8 @@ public class DatabaseHelper {
                         cursor.getString(2),
                         cursor.getString(3),
                         cursor.getString(4),
-                        cursor.getString(5)));
-                Log.e("OUT", cursor.getString(1) + " - " +
-                        cursor.getString(2) + " - " +
-                        cursor.getString(3) + " - " +
-                        cursor.getString(4) + " - " +
-                        cursor.getString(5));
+                        cursor.getString(5),
+                        cursor.getString(6)));
             }
             return classes;
         }catch (Exception e) {

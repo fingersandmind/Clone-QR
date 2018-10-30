@@ -1,6 +1,7 @@
 package com.lopez.julz.qrattendance;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -48,7 +50,7 @@ public class ClassesAdapter extends RecyclerView.Adapter<ClassesAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ClassesAdapter.ViewHolder holder, int position) {
-        Classes classes = classesList.get(position);
+        final Classes classes = classesList.get(position);
         holder.className.setText(classes.getCourse());
         holder.classDetails.setText(classes.getDate() + " " + classes.getTimeStart() + "-" + classes.getTimeEnd());
 
@@ -56,6 +58,10 @@ public class ClassesAdapter extends RecyclerView.Adapter<ClassesAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
+                bundle.putString("TCID", classes.getId());
+                Intent intent = new Intent(mContext, QRScanAttendance.class);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
             }
         });
     }

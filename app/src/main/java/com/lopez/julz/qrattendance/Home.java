@@ -23,7 +23,7 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
 //        Bundle bundle = getIntent().getExtras();
-        tchnum = "009";
+        tchnum = "2";
 
         recyclerView = (RecyclerView) findViewById(R.id.menu_recycler_view);
         menuList = new ArrayList<>();

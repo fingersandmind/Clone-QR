@@ -6,9 +6,18 @@ package com.lopez.julz.qrattendance;
 
 public class Classes {
 
-    private String course, timeStart, timeEnd, date, room;
+    private String id, course, timeStart, timeEnd, date, room;
 
     public Classes(String course, String timeStart, String timeEnd, String date, String room) {
+        this.course = course;
+        this.timeStart = timeStart;
+        this.timeEnd = timeEnd;
+        this.date = date;
+        this.room = room;
+    }
+
+    public Classes(String id, String course, String timeStart, String timeEnd, String date, String room) {
+        this.id = id;
         this.course = course;
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
@@ -54,5 +63,13 @@ public class Classes {
 
     public void setRoom(String room) {
         this.room = room;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

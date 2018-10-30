@@ -57,7 +57,7 @@ public class ChooseClass extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String semid = db.getSem(classesBox.getSelectedItem().toString()).getSemid();
-                Log.e("OUT", semid+"");
+
                 populateClasses(semid);
             }
         });
@@ -81,7 +81,7 @@ public class ChooseClass extends AppCompatActivity {
             int size = tmp.size();
 
             for (int i=0; i<size;i++) {
-                classesList.add(new Classes(tmp.get(i).getCourse(), tmp.get(i).getTimeStart(), tmp.get(i).getTimeEnd(), tmp.get(i).getDate(), tmp.get(i).getRoom()));
+                classesList.add(new Classes(tmp.get(i).getId(), tmp.get(i).getCourse(), tmp.get(i).getTimeStart(), tmp.get(i).getTimeEnd(), tmp.get(i).getDate(), tmp.get(i).getRoom()));
             }
 
             adapter.notifyDataSetChanged();

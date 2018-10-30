@@ -20,6 +20,7 @@ public class APIParser {
     public static String URL = "http://192.168.10.170/janrey_api/";
     public static String SEMS = "semesters.php";
     public static String CLASSES = "attendance.php";
+    public static String INSERT_ATTENDANCE = "insert_attendance.php";
 
     public APIParser() {}
 
@@ -51,7 +52,7 @@ public class APIParser {
 
             for (int i=0; i<respLength; i++) {
                 JSONObject items = myResponse.getJSONObject("" + i);
-                sems.add(new Semester(items.getString("sem"), items.getString("sem_code")));
+                sems.add(new Semester(items.getString("semester"), items.getString("id")));
             }
 
             return sems;
@@ -89,7 +90,8 @@ public class APIParser {
 
             for (int i=0; i<respLength; i++) {
                 JSONObject items = myResponse.getJSONObject("" + i);
-                classes.add(new Classes(items.getString("course"),
+                classes.add(new Classes(items.getString("id"),
+                                        items.getString("course"),
                                         items.getString("time_start"),
                                         items.getString("time_end"),
                                         items.getString("day"),
@@ -101,6 +103,40 @@ public class APIParser {
         } catch (Exception e) {
             Log.e("ERR_LOAD_CLASS", e.getMessage());
             return null;
+        }
+    }
+
+    public boolean insertAttendance(String tcid, String date, String tin) {
+        try {
+
+            URL obj = new URL(URL + INSERT_ATTENDANCE + "?tcid=" + tcid + "&date=" + date + "&tin=" + tin);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            // optional default is GET
+            con.setRequestMethod("GET");
+            //add request header
+            con.setRequestProperty("User-Agent", "Mozilla/5.0");
+
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            //response.toString().replace("[", "").replace("]", "").trim();
+            System.out.println(response.toString());
+            in.close();
+
+            JSONObject myResponse = new JSONObject(response.toString());
+
+            if (myResponse.getString("res").equals("200")) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 

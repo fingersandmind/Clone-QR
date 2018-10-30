@@ -31,6 +31,7 @@ public class DownloadClasses extends AppCompatActivity {
 
     public String semid = "";
     public String sem = "";
+    public String tchnum = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class DownloadClasses extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         semid = bundle.getString("SEM_ID");
         sem = bundle.getString("SEM");
+        tchnum = bundle.getString("TCHNUM");
         title = (TextView) findViewById(R.id.download_class_title);
         toolbar = (Toolbar) findViewById(R.id.toolbar_downloadclass);
         setSupportActionBar(toolbar);
@@ -55,7 +57,7 @@ public class DownloadClasses extends AppCompatActivity {
         parser = new APIParser();
         classesList = new ArrayList<>();
         
-        new LoadClasses().execute("009", semid);
+        new LoadClasses().execute(tchnum, semid);
 
         download.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +130,7 @@ public class DownloadClasses extends AppCompatActivity {
 
                 while(jumpTime < total) {
                     try {
-                        db.insertToClasses(classList.get(jumpTime).getCourse(),
+                        db.insertToClasses( classList.get(jumpTime).getId(), classList.get(jumpTime).getCourse(),
                                 classList.get(jumpTime).getTimeStart(),
                                 classList.get(jumpTime).getTimeEnd(),
                                 classList.get(jumpTime).getDate(),
