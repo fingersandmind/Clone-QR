@@ -39,6 +39,7 @@ public class QRScanAttendance extends AppCompatActivity {
     APIParser parser;
 
     String tcid = "";
+    public String nature = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +127,7 @@ public class QRScanAttendance extends AppCompatActivity {
                         intentData = barcodes.valueAt(0).displayValue;
                         txtBarcodeValue.setText(intentData);
                           //  Log.e("TEST", tcid + " - "+ getCurrentDate(new Date()) + " - "+ getCurrentTime(new Date()));
+                            nature = intentData.split(" ")[0];
                         new AddAttendance().execute();
 
                         }
@@ -151,7 +153,7 @@ public class QRScanAttendance extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            parser.insertAttendance(tcid, getCurrentDate(new Date()), getCurrentTime(new Date()));
+            parser.insertAttendance(tcid, getCurrentDate(new Date()), getCurrentTime(new Date()), nature);
             return null;
         }
 

@@ -17,7 +17,7 @@ import java.net.URL;
 
 public class APIParser {
 
-    public static String URL = "http://192.168.10.170/janrey_api/";
+    public static String URL = "http://192.168.8.101/janrey_api/";
     public static String SEMS = "semesters.php";
     public static String CLASSES = "attendance.php";
     public static String INSERT_ATTENDANCE = "insert_attendance.php";
@@ -106,10 +106,10 @@ public class APIParser {
         }
     }
 
-    public boolean insertAttendance(String tcid, String date, String tin) {
+    public boolean insertAttendance(String tcid, String date, String tin, String nature) {
         try {
 
-            URL obj = new URL(URL + INSERT_ATTENDANCE + "?tcid=" + tcid + "&date=" + date + "&tin=" + tin);
+            URL obj = new URL(URL + INSERT_ATTENDANCE + "?tcid=" + tcid + "&date=" + date + "&tin=" + tin + "&nature=" + nature);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             // optional default is GET
             con.setRequestMethod("GET");

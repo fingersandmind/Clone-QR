@@ -90,7 +90,7 @@ public class Login extends AppCompatActivity {
             HttpURLConnection conn = null;
             try {
                 //constants
-                URL url = new URL("http://192.168.10.170/janrey_api/login.php");
+                URL url = new URL("http://192.168.8.101/janrey_api/login.php");
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("usr", strings[0]);
                 jsonObject.put("pwd", strings[1]);

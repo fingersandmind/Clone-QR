@@ -93,14 +93,16 @@ public class DownloadClasses extends AppCompatActivity {
             List<Classes> classes = parser.getClasses(strings[0], strings[1]);
             classesList = parser.getClasses(strings[0], strings[1]);
             int size = classes.size();
+            if (size > 0) {
+                String[] arr = new String[size];
 
-            String[] arr = new String[size];
+                for (int i=0; i<size; i++) {
+                    arr[i] = classes.get(i).getCourse() + " (" + classes.get(i).getDate() + " on " + classes.get(i).getRoom() + ")";
+                }
 
-            for (int i=0; i<size; i++) {
-                arr[i] = classes.get(i).getCourse() + " (" + classes.get(i).getDate() + " on " + classes.get(i).getRoom() + ")";
+                adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, arr);
+
             }
-
-            adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, arr);
             return null;
         }
 
